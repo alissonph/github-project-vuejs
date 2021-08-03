@@ -1,5 +1,5 @@
 <h3 align="center">
-    [Acessar Projeto Funcionando](https://alissonph.github.io/github-project-vuejs/)
+    https://alissonph.github.io/github-project-vuejs/
 <h3 >
 
 # Indice
@@ -27,10 +27,10 @@ O projeto foi desenvolvido utilizando as seguintes tecnologias
 
 ```bash
     # Instalar as dependências
-    $ yarn install
+    $ yarn install ou npm install
 
     # Iniciar o projeto
-    $ yarn start
+    $ yarn serve ou npm run serve
 ```
 
 ---
