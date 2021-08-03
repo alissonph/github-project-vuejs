@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container my-3">
     <div class="card mb-3">
       <div class="card-body">
         <h5 class="card-title">GitHub Repositórios</h5>
@@ -50,91 +50,23 @@
         </div>
       </div>
     </div>
-    <div v-if="user.id" class="card mb-3">
-      <div class="row g-0">
-        <div class="col-md-4">
-          <img
-            :src="user.avatar_url"
-            class="img-fluid rounded-start"
-            alt="User profile image"
-          />
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h5 class="card-title">{{ user.name }}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">
-              <a :href="user.html_url" target="_blank">@{{ user.login }}</a>
-            </h6>
-            <div class="card-text d-flex flex-column">
-              <p>
-                {{ user.followers }} seguidores - {{ user.following }} seguindo
-              </p>
-              <p v-if="user.bio">{{ user.bio }}</p>
-              <small v-if="user.location" class="text-muted">{{
-                user.location
-              }}</small>
-              <small v-if="user.blog" class="text-muted"
-                ><a :href="user.blog">{{ user.blog }}</a></small
-              >
-            </div>
-            <p class="card-text"></p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">
-          Repositórios
-          <span
-            v-if="user.public_repos"
-            class="badge rounded-pill bg-secondary"
-            >{{ user.public_repos }}</span
-          >
-        </h5>
-        <div class="card-text">
-          <span v-if="!repos.length">Nenhum repositório encontrado.</span>
+    <Profile :user="user" />
 
-          <div class="row">
-            <div
-              class="col-sm-6 col-md-6 col-lg-4 mb-4"
-              v-for="repo in repos"
-              :key="repo.id"
-            >
-              <div class="card repository">
-                <div class="card-body">
-                  <h5 class="card-title">
-                    <a :href="repo.html_url" target="_blank">{{ repo.name }}</a>
-                  </h5>
-                  <div class="card-text">
-                    <p>
-                      {{ repo.description }}
-                    </p>
-                    <small v-if="true" class="text-muted"
-                      >Última atualização:
-                      {{ repo.updated_at | formatDate }}</small
-                    >
-                  </div>
-                </div>
-                <div class="card-footer">
-                  {{
-                    repo.language ? repo.language : "Linguagem não informada"
-                  }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Repositories :user="user" :repos="repos" />
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import Profile from "./Profile.vue";
+import Repositories from "./Repositories.vue";
 
 export default {
   name: "Home",
+  components: {
+    Profile,
+    Repositories,
+  },
   data: function () {
     return {
       username: "",
@@ -197,14 +129,6 @@ export default {
 </script>
 
 <style scoped>
-.repository {
-  min-height: 200px !important;
-}
-
-a {
-  text-decoration: none;
-}
-
 .clean {
   margin-left: 10px !important;
 }
