@@ -25,6 +25,9 @@
             <small v-if="user.blog" class="text-muted"
               ><a :href="user.blog">{{ user.blog }}</a></small
             >
+            <small v-if="user.created_at" class="text-muted"
+              >Membro desde: {{ user.created_at | formatDate }}</small
+            >
           </div>
           <p class="card-text"></p>
         </div>
