@@ -1,24 +1,38 @@
-# github-project
+<h3 align="center">
+    [Acessar Projeto Funcionando](https://alissonph.github.io/github-project-vuejs/)
+<h3 >
 
-## Project setup
-```
-yarn install
+# Indice
+
+- [Sobre](#-sobre)
+- [Tecnologias Utilizadas](#-tecnologias-utilizadas)
+- [Como rodar o projeto](#-como-rodar-o-projeto)
+
+## 🔖&nbsp; Sobre
+
+O projeto é um site onde é possível listar os repositórios e algumas informações do usuário do GitHub.
+
+---
+
+## 🚀 Tecnologias utilizadas
+
+O projeto foi desenvolvido utilizando as seguintes tecnologias
+
+- [VueJS](https://vuejs.org/)
+- [Bootstrap](https://getbootstrap.com/)
+
+---
+
+## 🗂 Como rodar o projeto
+
+```bash
+    # Instalar as dependências
+    $ yarn install
+
+    # Iniciar o projeto
+    $ yarn start
 ```
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+---
 
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Desenvolvido por Alisson Hausmann
