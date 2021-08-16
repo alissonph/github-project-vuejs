@@ -52,7 +52,7 @@
     </div>
     <Profile :user="user" />
 
-    <Repositories :user="user" :repos="repos" />
+    <Repositories :user="user" :repos="repos" :hasMore="hasMore" @loadMore="getRepos" />
   </div>
 </template>
 
@@ -72,6 +72,8 @@ export default {
       username: "",
       user: {},
       repos: [],
+      page: 0,
+      hasMore: false,
       loader: {
         user: false,
         search: false,
@@ -89,9 +91,9 @@ export default {
   methods: {
     search() {
       if (this.username) {
-        this.errorMessage = "";
+        this.clean();
+        this.page = 1;
         this.getUser();
-        this.getRepos();
       }
     },
     getUser() {
@@ -99,10 +101,17 @@ export default {
       this.loader.user = true;
       axios
         .get(url)
-        .then((response) => (this.user = response.data))
-        .catch(() => {
+        .then((response) => {
+          this.user = response.data
+          this.getRepos();
+        })
+        .catch((error) => {
           this.clean();
-          this.errorMessage = "Usuário não encontrado.";
+          if (error.response.status === 403) {            
+            this.errorMessage = "Limite da API do GitHub excedido, tente novamente mais tarde.";
+          } else {
+            this.errorMessage = "Usuário não encontrado.";
+          }
         })
         .finally(() => (this.loader.user = false));
     },
@@ -110,21 +119,34 @@ export default {
       const url = `https://api.github.com/users/${this.username}/repos`;
       this.loader.search = true;
       axios
-        .get(url)
-        .then((response) => (this.repos = response.data))
-        .catch(() => {
+        .get(url, { params: { page: this.page }})
+        .then((response) => {
+          this.repos = { ...this.repos, ...response.data }
+          this.page++;
+        })
+        .catch((error) => {
           this.clean();
-          this.errorMessage = "Usuário não encontrado.";
+          if (error.response.status === 403) {            
+            this.errorMessage = "Limite da API do GitHub excedido, tente novamente mais tarde.";
+          } else {
+            this.errorMessage = "Repositório não encontrado.";
+          }
         })
         .finally(() => (this.loader.search = false));
     },
     clean() {
-      this.username = "";
       this.user = {};
       this.repos = [];
       this.errorMessage = "";
-    },
+    }
   },
+
+  watch: {
+    page: function () {
+      console.log(this.page, (30 * this.page) < this.user.public_repos);
+      this.hasMore = (30 * this.page) < this.user.public_repos;
+    }
+  }
 };
 </script>
 
