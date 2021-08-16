@@ -40,7 +40,13 @@
           </div>
         </div>
         <div class="d-flex flex-row justify-content-center" v-if="hasMore">
-          <button type="button" class="btn btn-primary align-self-center" @click="loadMore">Carregar Mais...</button>
+          <button
+            type="button"
+            class="btn btn-primary align-self-center"
+            @click="loadMore"
+          >
+            Carregar Mais...
+          </button>
         </div>
       </div>
     </div>
@@ -53,13 +59,13 @@ export default {
   props: {
     user: Object,
     repos: Array,
-    hasMore: Boolean
+    hasMore: Boolean,
   },
   methods: {
     loadMore() {
-      this.$emit('loadMore');
-    }
-  }
+      this.$emit("loadMore");
+    },
+  },
 };
 </script>
 
