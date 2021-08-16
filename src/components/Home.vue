@@ -92,7 +92,7 @@ export default {
     search() {
       if (this.username) {
         this.clean();
-        this.page = 1;
+        this.page = 0;
         this.getUser();
       }
     },
@@ -116,13 +116,13 @@ export default {
         .finally(() => (this.loader.user = false));
     },
     getRepos() {
+      this.page++;
       const url = `https://api.github.com/users/${this.username}/repos`;
       this.loader.search = true;
       axios
         .get(url, { params: { page: this.page }})
         .then((response) => {
           this.repos = { ...this.repos, ...response.data }
-          this.page++;
         })
         .catch((error) => {
           this.clean();
@@ -143,7 +143,6 @@ export default {
 
   watch: {
     page: function () {
-      console.log(this.page, (30 * this.page) < this.user.public_repos);
       this.hasMore = (30 * this.page) < this.user.public_repos;
     }
   }
