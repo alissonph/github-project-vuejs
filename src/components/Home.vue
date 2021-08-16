@@ -122,7 +122,7 @@ export default {
       axios
         .get(url, { params: { page: this.page }})
         .then((response) => {
-          this.repos = { ...this.repos, ...response.data }
+          this.repos = [ ...this.repos, ...response.data ];
         })
         .catch((error) => {
           this.clean();
